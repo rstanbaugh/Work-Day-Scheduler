@@ -4,6 +4,47 @@ $('#currentDay').text(moment().format('dddd, MMM Do'));
 // tasks array
 tasks = {};
 
+// function to update teh formatting of the tasks based on time
+var auditTasks = function(tstHour) {
+// get current hour
+
+// tstHour is for testing hte auditTasks function
+var currentHour;
+if(tstHour){
+  currentHour = tstHour;
+} else {
+  currentHour = moment().format("H");
+}
+
+
+// loop through each time block
+var taskEl = $(".taskDiv");
+
+taskEl.each(function(i){
+  var taskHour = $(taskEl[i]).data("hour");
+  // remove all classes: "past" "present" and "future"
+  $(taskEl[i]).removeClass("past")
+  $(taskEl[i]).removeClass("present")
+  $(taskEl[i]).removeClass("future")
+
+  if (currentHour == taskHour ){        /* if task hour is now */
+    $(taskEl[i]).addClass("present")  
+  } else if (currentHour > taskHour){   /* if task hour is before now*/
+    $(taskEl[i]).addClass("past")
+  } else {                              /* task hour imust be after now */
+    $(taskEl[i]).addClass("future")
+  }
+});
+
+
+
+// set timer automation
+setInterval(function(){
+    auditTask();
+}, (1000*60)*10);
+
+};
+
 $(".saveBtn").on("click",function(){
   console.log("save button clicked");
 });
@@ -67,3 +108,5 @@ var loadTasks = function(){
 var saveTasks = function(){
 // save to local storage
 }
+
+auditTasks();
