@@ -11,7 +11,6 @@ $(".saveBtn").on("click",function(){
 
 // $(".task").on("click","textarea", function(){
 $(".taskDiv").on("click", "p", function(){
-    console.log(this,"save button clicked");
   // get current text of p element
   var text = $(this)
     .text()
@@ -28,7 +27,7 @@ $(".taskDiv").on("click", "p", function(){
 });
 
   // editable field was un-focused
-  $(".task").on("blur", "textarea", function() {
+  $(".taskDiv").on("blur", "textarea", function() {
     //get the textareas; current value/text
       var text = $(this)
         .val()
