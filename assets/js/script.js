@@ -1,9 +1,6 @@
 // set current day
 $('#currentDay').text(moment().format('dddd, MMM Do'));
 
-// // tasks array
-// tasks = [];
-
 // function to update the formatting of the tasks based on time
 var auditTasks = function(tstHour) {
   // get current hour
@@ -50,9 +47,7 @@ $(".taskDiv").on("click", "p", function(){
     .trim()
   
   // save the data attribute 
-  // var dataHour = num.toString($(this).parents().data("hour"));
   var dataHour = (($(this).parents().data("hour").toString()));
-
 
   // replace p element with a new textarea
   var textInput = $("<textarea>")
@@ -79,14 +74,14 @@ $(".taskDiv").on("blur", "textarea", function() {
     $(this).replaceWith(taskP);
   });
 
-// 
-
+// Save to local storage when saveBtn clicked
 $(".saveBtn").on("click",function(){
   var index = $(".saveBtn").index(this);
   tasks[index] = $(this).parent().find("p").text()
   localStorage.setItem("tasks",JSON.stringify(tasks));
 });
 
+// loadTasks from local storage
 var loadTasks = function(){
   // load from local storage
   tasks = JSON.parse(localStorage.getItem("tasks"));
