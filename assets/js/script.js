@@ -2,9 +2,9 @@
 $('#currentDay').text(moment().format('dddd, MMM Do'));
 
 // tasks array
-wdsTasks = [];
+tasks = [];
 
-// function to update teh formatting of the tasks based on time
+// function to update the formatting of the tasks based on time
 var auditTasks = function(tstHour) {
   // get current hour
   // tstHour is for testing hte auditTasks function
@@ -34,6 +34,7 @@ var auditTasks = function(tstHour) {
   });
 };
 
+// timer to update the formatting
 auditTasks();
 // set timer automation to update formatting every 10 minutes
 setInterval(function(){
@@ -41,7 +42,7 @@ setInterval(function(){
 }, (1000*60)*10);
 
 
-// click task to edit code
+// EDIT: click task to edit code
 $(".taskDiv").on("click", "p", function(){
   // get current text of p element
   var text = $(this)
@@ -57,8 +58,6 @@ $(".taskDiv").on("click", "p", function(){
   var textInput = $("<textarea>")
     .addClass("form-control")
     .val(text);
-    textInput.attr("id",dataHour)   /* pass the data attribute along */
-
   $(this).replaceWith(textInput);
 
   // auto focus new element
@@ -74,40 +73,19 @@ $(".taskDiv").on("blur", "textarea", function() {
 
     //recreate p element
     var taskP = $("<p>")
-      .addClass("m-1")
       .text(text);
-
-    // extract the taskHour that was passed in data-hour
-    var taskHour = $($(this).parents()[0]).data("hour");
-    // console.log('taskHour',taskHour);
-    console.log(taskHour,text);
 
     // replace textarea with new content
     $(this).replaceWith(taskP);
-
-    // update task array wdsTasks
-    // check for duplicates of hour to see if object needs updated or replaced
-    debugger
-    let index = wdsTasks.map(x =>x.hour).indexOf(taskHour);
-    if (index >= 0){
-      console.log('found');
-      wdsTasks[index].task = text
-    } else {
-      console.log('not found');
-      wdsTasks.push({
-        hour: taskHour,
-        task: text
-      });
-    }
   });
-  // }); 
-
 
 // 
 
-// $(".saveBtn").on("click",function(){
-//   console.log("save button clicked");
-// });
+$(".saveBtn").on("click",function(){
+  var index = $(".saveBtn").index(this);
+  tasks[index] = $(this).parent().find("p").text()
+  localStorage.setItem("tasks",JSON.stringify(tasks));
+});
 
 var loadTasks = function(){
   // load from local storage
@@ -115,20 +93,13 @@ var loadTasks = function(){
 
     // if nothing in localStorage, create a new object to track task toDo items
     if (!tasks) {
-      tasks = {
-        toDo: [],
-      };
+      tasks = []
+    } else {
+      $.each(tasks, function(list, arr){
+        $("#task-index-"+list).text(arr)
+      });
     }
-
-    // loop over object properties
-    $.each(tasks, function(list, arr) {
-      arr.forEach(function(task) {
-        createTask(task.text, task.date, list);
-    });
-  });
 }
 
-
-var saveTasks = function(){
-// save to local storage
-}
+loadTasks();
+auditTasks();
