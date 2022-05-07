@@ -86,30 +86,21 @@ $(".taskDiv").on("blur", "textarea", function() {
     $(this).replaceWith(taskP);
 
     // update task array wdsTasks
-    if(wdsTasks.length>0){
-      // check for dups
-      debugger
-      for (i=0;i<wdsTasks.length;i++){
-        if(wdsTasks[i].hour === taskHour){
-          // there is a dup
-          wdsTasks[i].task = text;
-        } else {
-          // there is not a dup; add a new object
-          wdsTasks.push({
-            hour: taskHour,
-            task: text
-          });
-          break;
-        }
+    // check for duplicates of hour to see if object needs updated or replaced
+    debugger
+    let index = wdsTasks.map(x =>x.hour).indexOf(taskHour);
+    if (index >= 0){
+      console.log('found');
+      wdsTasks[index].task = text
     } else {
-      // add a new object
+      console.log('not found');
       wdsTasks.push({
         hour: taskHour,
         task: text
       });
     }
-
-  }); 
+  });
+  // }); 
 
 
 // 
