@@ -1,4 +1,4 @@
-# Challenge 5: JWork Day Scheduler
+# Challenge 5: Work Day Scheduler
 #####  Code added by: Rich Stanbuagh <br />
 
 
