@@ -1,8 +1,8 @@
 // set current day
 $('#currentDay').text(moment().format('dddd, MMM Do'));
 
-// tasks array
-tasks = [];
+// // tasks array
+// tasks = [];
 
 // function to update the formatting of the tasks based on time
 var auditTasks = function(tstHour) {
